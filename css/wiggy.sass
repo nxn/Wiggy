@@ -1,0 +1,292 @@
+$lightSlate:  #587e93
+$slate:       #505964
+$darkSlate:   #373e46
+$paleBlue:    #ddf0fb
+$lightBlue:   #b9e0f5
+$blue:        #83b0ca
+$darkBlue:    #0d3346
+$white:       #ffffff
+$paleWhite:   #f3f4f5
+$darkWhite:   #efefef
+$lightGray:   #d8dbde
+$gray:        #c1c5ca
+$darkGray:    #85898c
+$black:       #000000
+
+@mixin gradient($start, $end)
+  background:
+    image: -webkit-gradient(linear, 0% 0%, 0% 100%, from($start), to($end))
+    image: -webkit-linear-gradient($start, $end)
+    image: -moz-linear-gradient(top, $start, $end)
+    image: -o-linear-gradient(top, $start, $end)
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#{$start}, endColorstr=#{$end})"
+
+@font-face
+  font-family: 'IconicStroke'
+  src: url('../fonts/iconic_stroke.eot')
+  src: local('IconicStroke'), url('../fonts/iconic_stroke.svg#iconic') format('svg'), url('../fonts/iconic_stroke.otf') format('opentype')
+
+*:focus
+  outline: none
+::-moz-focus-inner
+  border: 0
+*, button::-moz-focus-inner, input[type=button]::-moz-focus-inner
+  border: 0px
+  padding: 0px
+  margin: 0px
+ 
+.wiggy-label
+  vertical-align: middle
+
+.wiggy-symbol
+  vertical-align: none
+  text:
+    transform: none
+    align: center
+  font:
+    family: IconicStroke
+    weight: normal
+ 
+.wiggy-button
+  @include gradient($lightGray, $gray)
+  font:
+    family: Arial, Verdana, Tahoma
+    size: 8pt
+    weight: bold
+  text:
+    transform: uppercase
+    decoration: none
+    shadow: 0px 1px 0px $white
+  border:
+    radius: 3px
+    bottom: 1px solid $darkGray
+    top: 1px solid $paleWhite
+    left: none
+    right: none
+  box:
+    shadow: 0px 1px 2px rgba(0,0,0,.2)
+    sizing: content-box
+  -moz-box-sizing: content-box
+  outline: none
+  height: 25px
+  line-height: 25px
+  vertical-align: middle
+  padding: 0px 10px
+  color: $darkBlue
+  margin: 3px
+  cursor: pointer
+  display: inline-block
+  &[disabled="disabled"], &[disabled="disabled"]:hover, &[disabled="disabled"]:active
+    @include gradient($lightGray, $gray)
+    color: $darkGray
+    border:
+      top: 1px solid $paleWhite
+      bottom: 1px solid $darkGray
+    text-shadow: 0px 1px 0px $white
+    cursor: default
+  &:hover, &.hover
+    @include gradient($lightBlue, $blue)
+    color: $darkBlue
+    border:
+      top: 1px solid $paleBlue
+      bottom: 1px solid $lightSlate
+  &:active, &.active
+    @include gradient($blue, $slate)
+    color: $paleWhite
+    border:
+      top: 1px solid $lightBlue
+      bottom: 1px solid $darkSlate
+    text-shadow: 0px -1px 0px $slate
+
+.wiggy-checkbox
+  width: 15px
+  height: 15px
+  line-height: 17px
+  font-size: 17px
+  margin: 5px
+  padding: 0px
+    left: 1px
+  vertical-align: middle
+  &.checked
+    @extend .wiggy-button.active
+    @extend .wiggy-symbol
+    &:before
+      content: "y"
+ 
+.wiggy-radiobutton
+  @extend .wiggy-checkbox
+  border-radius: 8px
+  height: 14px
+  padding-top: 1px
+  &.checked:before
+    content: "4"
+ 
+.wiggy-buttongroup
+  overflow: hidden
+  padding: 3px
+  .wiggy-button
+    float: left
+    border-radius: 0
+    margin: 0px
+  &>:first-child.wiggy-button
+    border:
+      top-left-radius: 3px
+      bottom-left-radius: 3px
+  &>:last-child.wiggy-button
+    border:
+      top-right-radius: 3px
+      bottom-right-radius: 3px
+ 
+.wiggy-textfield
+  @include gradient($paleWhite, $white)
+  font:
+    family: Arial, Verdana, Tahoma
+    size: 9pt
+  text-decoration: none
+  word-spacing: 0.3em
+  letter-spacing: 0.1em
+  padding: 0px 5px
+  box-shadow: inset 0px 1px 5px rgba(13,51,70,0.3)
+  margin: 5px
+  width: 250px
+  height: 25px
+  line-height: 25px
+  border: 1px solid rgba(255,255,255,0.5)
+    radius: 3px
+  &:focus
+    outline: none
+    border: 1px solid $blue
+  &:hover
+    border: 1px solid $blue
+ 
+.wiggy-textarea
+  @extend .wiggy-textfield
+  height: auto
+  text-align: top
+  line-height: 15px
+  padding: 5px
+ 
+.wiggy-searchfield
+  overflow: hidden
+  display: inline-block
+  padding: 5px
+  .wiggy-button
+    @extend .wiggy-symbol
+    height: 25px
+    font-size: 16pt
+    line-height: 29px
+    padding: 0px
+    float: left
+    border: 1px solid rgba(255,255,255,1.0)
+      top:
+        right-radius: 12px
+        left-radius: 0px
+      bottom:
+        right-radius: 12px
+        left-radius: 0px
+      left: none
+    width: 35px
+    box-shadow: none
+    margin: 0px
+    &:before
+      content: 'f'
+    &.active, &:active
+      border: 1px solid $slate !important
+        left: none !important
+    &.hover, &:hover
+      border: 1px solid $blue
+        left: none
+    &.focus
+      border: 1px solid $blue
+        left: none
+  .wiggy-textfield
+    border:
+      top:
+        left-radius: 12px
+        right-radius: 0px
+      bottom:
+        left-radius: 12px
+        right-radius: 0px
+      right: none
+    float: left
+    margin: 0px
+    width: 215px
+    &.active
+      border: 1px solid $slate !important
+        right: none !important
+    &.hover
+      border: 1px solid $blue
+        right: none
+ 
+.wiggy-panel
+  @include gradient($white, $paleWhite)
+  color: $black
+  line-height: 1.5em
+  box-shadow: 0px 1px 3px rgba(0,0,0,.2)
+  padding: 10px
+  overflow: hidden
+ 
+.wiggy-tabpanel
+  position: relative
+  .wiggy-panel
+    padding-top: 18px
+  .wiggy-buttongroup
+    position: absolute
+    margin: 0px auto
+    top: -16px
+    left: 7px
+ 
+.wiggy-window
+  box-shadow: 0px 5px 20px rgba(0,0,0,0.3)
+  overflow: hidden
+  position: absolute
+  .wiggy-panel
+    box-shadow: none
+    position: relative
+    overflow: hidden
+  .wiggy-titlebar
+    padding: 0px
+    border-bottom: 1px solid $darkWhite
+    cursor: move
+    height: 30px
+    position: relative
+    box-shadow: 0px 5px 20px rgba(0,0,0,0.3) !important
+    border:
+      top-left-radius: 7px
+      top-right-radius: 7px
+    .wiggy-title
+      font:
+        family: Arial, Verdana, Tahoma
+        size: 8pt
+        weight: bold
+      text:
+        align: center
+        decoration: none
+        shadow: 0px 1px 0px $white
+      line-height: 30px
+      color: $darkBlue
+      word-spacing: 0.3em
+      letter-spacing: 0.1em
+    .wiggy-buttongroup
+      position: absolute
+      right: 3px
+      top: 3px
+      .wiggy-button
+        @extend .wiggy-symbol
+        height: 16px
+        line-height: 17px
+        font-size: 17px
+        width: 25px
+        padding: 0px
+          top: 1px
+        margin: 0px
+        overflow: hidden
+        &.minimize
+          &:after
+            content: '-'
+          height: 13px
+          padding-top: 4px
+        &.maximize:after
+          content: '1'
+        &.close:after
+          content: 'x'
