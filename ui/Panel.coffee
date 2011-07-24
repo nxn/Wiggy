@@ -1,4 +1,6 @@
 #### A container for composing multiple sub-widgets into an interface
+# *Important: Will use LayoutContainer for generating interface once
+# implemented*
 class Wiggy.ui.Panel extends Wiggy.ui.LayoutContainer
   constructor: (config) ->
     super config
