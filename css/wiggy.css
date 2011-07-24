@@ -1,1 +1,268 @@
-../../wiggy/css/wiggy.css
+@font-face {
+  font-family: "IconicStroke";
+  src: url("../fonts/iconic_stroke.eot");
+  src: local("IconicStroke"), url("../fonts/iconic_stroke.svg#iconic") format("svg"), url("../fonts/iconic_stroke.otf") format("opentype"); }
+
+*:focus {
+  outline: none; }
+
+::-moz-focus-inner {
+  border: 0; }
+
+*, button::-moz-focus-inner, input[type=button]::-moz-focus-inner {
+  border: 0px;
+  padding: 0px;
+  margin: 0px; }
+
+.wiggy-label {
+  vertical-align: middle; }
+
+.wiggy-symbol, .wiggy-checkbox.checked, .checked.wiggy-radiobutton, .wiggy-searchfield .wiggy-button, .wiggy-window .wiggy-titlebar .wiggy-buttongroup .wiggy-button {
+  vertical-align: none;
+  text-transform: none;
+  text-align: center;
+  font-family: IconicStroke;
+  font-weight: normal; }
+
+.wiggy-button {
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#d8dbde), to(#c1c5ca));
+  background-image: -webkit-linear-gradient(#d8dbde, #c1c5ca);
+  background-image: -moz-linear-gradient(top, #d8dbde, #c1c5ca);
+  background-image: -o-linear-gradient(top, #d8dbde, #c1c5ca);
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#d8dbde, endColorstr=#c1c5ca)";
+  font-family: Arial, Verdana, Tahoma;
+  font-size: 8pt;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px white;
+  border-radius: 3px;
+  border-bottom: 1px solid #85898c;
+  border-top: 1px solid #f3f4f5;
+  border-left: none;
+  border-right: none;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+  box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  outline: none;
+  height: 25px;
+  line-height: 25px;
+  vertical-align: middle;
+  padding: 0px 10px;
+  color: #0d3346;
+  margin: 3px;
+  cursor: pointer;
+  display: inline-block; }
+  .wiggy-button[disabled="disabled"], .wiggy-button[disabled="disabled"]:hover, .wiggy-button[disabled="disabled"]:active {
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#d8dbde), to(#c1c5ca));
+    background-image: -webkit-linear-gradient(#d8dbde, #c1c5ca);
+    background-image: -moz-linear-gradient(top, #d8dbde, #c1c5ca);
+    background-image: -o-linear-gradient(top, #d8dbde, #c1c5ca);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#d8dbde, endColorstr=#c1c5ca)";
+    color: #85898c;
+    border-top: 1px solid #f3f4f5;
+    border-bottom: 1px solid #85898c;
+    text-shadow: 0px 1px 0px white;
+    cursor: default; }
+  .wiggy-button:hover, .wiggy-button.hover {
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#b9e0f5), to(#83b0ca));
+    background-image: -webkit-linear-gradient(#b9e0f5, #83b0ca);
+    background-image: -moz-linear-gradient(top, #b9e0f5, #83b0ca);
+    background-image: -o-linear-gradient(top, #b9e0f5, #83b0ca);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#b9e0f5, endColorstr=#83b0ca)";
+    color: #0d3346;
+    border-top: 1px solid #ddf0fb;
+    border-bottom: 1px solid #587e93; }
+  .wiggy-button:active, .wiggy-button.active, .wiggy-checkbox.checked, .checked.wiggy-radiobutton {
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#83b0ca), to(#505964));
+    background-image: -webkit-linear-gradient(#83b0ca, #505964);
+    background-image: -moz-linear-gradient(top, #83b0ca, #505964);
+    background-image: -o-linear-gradient(top, #83b0ca, #505964);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#83b0ca, endColorstr=#505964)";
+    color: #f3f4f5;
+    border-top: 1px solid #b9e0f5;
+    border-bottom: 1px solid #373e46;
+    text-shadow: 0px -1px 0px #505964; }
+
+.wiggy-checkbox, .wiggy-radiobutton {
+  width: 15px;
+  height: 15px;
+  line-height: 17px;
+  font-size: 17px;
+  margin: 5px;
+  padding: 0px;
+    padding-left: 1px;
+  vertical-align: middle; }
+  .wiggy-checkbox.checked:before, .checked.wiggy-radiobutton:before {
+    content: "y"; }
+
+.wiggy-radiobutton {
+  border-radius: 8px;
+  height: 14px;
+  padding-top: 1px; }
+  .wiggy-radiobutton.checked:before {
+    content: "4"; }
+
+.wiggy-buttongroup {
+  overflow: hidden;
+  padding: 3px; }
+  .wiggy-buttongroup .wiggy-button {
+    float: left;
+    border-radius: 0;
+    margin: 0px; }
+  .wiggy-buttongroup > :first-child.wiggy-button {
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px; }
+  .wiggy-buttongroup > :last-child.wiggy-button {
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px; }
+
+.wiggy-textfield, .wiggy-textarea {
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f3f4f5), to(white));
+  background-image: -webkit-linear-gradient(#f3f4f5, white);
+  background-image: -moz-linear-gradient(top, #f3f4f5, white);
+  background-image: -o-linear-gradient(top, #f3f4f5, white);
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#f3f4f5, endColorstr=white)";
+  font-family: Arial, Verdana, Tahoma;
+  font-size: 9pt;
+  text-decoration: none;
+  word-spacing: 0.3em;
+  letter-spacing: 0.1em;
+  padding: 0px 5px;
+  box-shadow: inset 0px 1px 5px rgba(13, 51, 70, 0.3);
+  margin: 5px;
+  width: 250px;
+  height: 25px;
+  line-height: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 3px; }
+  .wiggy-textfield:focus, .wiggy-textarea:focus {
+    outline: none;
+    border: 1px solid #83b0ca; }
+  .wiggy-textfield:hover, .wiggy-textarea:hover {
+    border: 1px solid #83b0ca; }
+
+.wiggy-textarea {
+  height: auto;
+  text-align: top;
+  line-height: 15px;
+  padding: 5px; }
+
+.wiggy-searchfield {
+  overflow: hidden;
+  display: inline-block;
+  padding: 5px; }
+  .wiggy-searchfield .wiggy-button {
+    height: 25px;
+    font-size: 16pt;
+    line-height: 29px;
+    padding: 0px;
+    float: left;
+    border: 1px solid white;
+      border-top-right-radius: 12px;
+      border-top-left-radius: 0px;
+      border-bottom-right-radius: 12px;
+      border-bottom-left-radius: 0px;
+      border-left: none;
+    width: 35px;
+    box-shadow: none;
+    margin: 0px; }
+    .wiggy-searchfield .wiggy-button:before {
+      content: "f"; }
+    .wiggy-searchfield .wiggy-button.active, .wiggy-searchfield .wiggy-checkbox.checked, .wiggy-searchfield .checked.wiggy-radiobutton, .wiggy-searchfield .wiggy-button:active {
+      border: 1px solid #505964 !important;
+        border-left: none !important; }
+    .wiggy-searchfield .wiggy-button.hover, .wiggy-searchfield .wiggy-button:hover {
+      border: 1px solid #83b0ca;
+        border-left: none; }
+    .wiggy-searchfield .wiggy-button.focus {
+      border: 1px solid #83b0ca;
+        border-left: none; }
+  .wiggy-searchfield .wiggy-textfield, .wiggy-searchfield .wiggy-textarea {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 0px;
+    border-right: none;
+    float: left;
+    margin: 0px;
+    width: 215px; }
+    .wiggy-searchfield .wiggy-textfield.active, .wiggy-searchfield .active.wiggy-textarea {
+      border: 1px solid #505964 !important;
+        border-right: none !important; }
+    .wiggy-searchfield .wiggy-textfield.hover, .wiggy-searchfield .hover.wiggy-textarea {
+      border: 1px solid #83b0ca;
+        border-right: none; }
+
+.wiggy-panel {
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(white), to(#f3f4f5));
+  background-image: -webkit-linear-gradient(white, #f3f4f5);
+  background-image: -moz-linear-gradient(top, white, #f3f4f5);
+  background-image: -o-linear-gradient(top, white, #f3f4f5);
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=white, endColorstr=#f3f4f5)";
+  color: black;
+  line-height: 1.5em;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  overflow: hidden; }
+
+.wiggy-tabpanel {
+  position: relative; }
+  .wiggy-tabpanel .wiggy-panel {
+    padding-top: 18px; }
+  .wiggy-tabpanel .wiggy-buttongroup {
+    position: absolute;
+    margin: 0px auto;
+    top: -16px;
+    left: 7px; }
+
+.wiggy-window {
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  position: absolute; }
+  .wiggy-window .wiggy-panel {
+    box-shadow: none;
+    position: relative;
+    overflow: hidden; }
+  .wiggy-window .wiggy-titlebar {
+    padding: 0px;
+    border-bottom: 1px solid #efefef;
+    cursor: move;
+    height: 30px;
+    position: relative;
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.3) !important;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px; }
+    .wiggy-window .wiggy-titlebar .wiggy-title {
+      font-family: Arial, Verdana, Tahoma;
+      font-size: 8pt;
+      font-weight: bold;
+      text-align: center;
+      text-decoration: none;
+      text-shadow: 0px 1px 0px white;
+      line-height: 30px;
+      color: #0d3346;
+      word-spacing: 0.3em;
+      letter-spacing: 0.1em; }
+    .wiggy-window .wiggy-titlebar .wiggy-buttongroup {
+      position: absolute;
+      right: 3px;
+      top: 3px; }
+      .wiggy-window .wiggy-titlebar .wiggy-buttongroup .wiggy-button {
+        height: 16px;
+        line-height: 17px;
+        font-size: 17px;
+        width: 25px;
+        padding: 0px;
+          padding-top: 1px;
+        margin: 0px;
+        overflow: hidden; }
+        .wiggy-window .wiggy-titlebar .wiggy-buttongroup .wiggy-button.minimize {
+          height: 13px;
+          padding-top: 4px; }
+          .wiggy-window .wiggy-titlebar .wiggy-buttongroup .wiggy-button.minimize:after {
+            content: "-"; }
+        .wiggy-window .wiggy-titlebar .wiggy-buttongroup .wiggy-button.maximize:after {
+          content: "1"; }
+        .wiggy-window .wiggy-titlebar .wiggy-buttongroup .wiggy-button.close:after {
+          content: "x"; }
