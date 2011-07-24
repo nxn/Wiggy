@@ -49,8 +49,7 @@ class Wiggy.data.Sequence
     for item in items
       @items.push item
 
-  onInsert: (idx, val) =>
-    @items.splice idx, 0, val
+  onInsert: (idx, val) => @items.splice idx, 0, val
 
   onRemove: (idxs...) =>
     # Sort indexes by descending order to ensure we don't offset items
