@@ -37,6 +37,8 @@
 { font-size: 48pt
 ; font-family: 'AirstreamRegular'
 ; font-weight: normal
+; display: inline-block
+; margin-right: 25px
 }
   h2
 { color: #0d3346
@@ -45,6 +47,14 @@
 { font-size: 9pt
 ; margin-top: 20px
 ; font-weight: normal
+}
+  a, a:visited, a:hover, a:active
+{ text-decoration: none
+; color: #0d3346
+; font-weight: bold
+}
+  a:hover
+{ color: #587e93
 }
   .wiggy-tabpanel h2
 { margin: 10px 0px
