@@ -18,17 +18,17 @@ class Wiggy.data.Sequence
         if type is "string" or type is "number" or type is "boolean" or type is "undefined"
           # Since every value gets turned into a string when being set as a property
           # name, we must specify its initial type. This avoids the string value
-          # "false" from being considered the same as the boolean value false
+          # **"false"** from being considered the same as the boolean value **false**
           values[type+val] = val
 
         else
           # In the event of reference types, the only way to check if we already
           # have that reference is to loop through all the ones that were found so
           # far. Since value types are going to their own temporary object, we can
-          # use 'result' exclusively for refs right now.
+          # use **result** exclusively for refs right now.
           result.add val unless val in result.items
 
-      # Now that we've gone through all items, we add the value types to the
+      # Now that we've gone through all **@items**, we add the value types to the
       # result sequence and return it.
       result.add (val for key, val of values)
 
@@ -53,7 +53,7 @@ class Wiggy.data.Sequence
     @items.splice idx, 0, val
 
   onRemove: (idxs...) =>
-    # sort indexes by descending order to ensure we don't offset items
+    # Sort indexes by descending order to ensure we don't offset items
     # located before our next deletion index
     idxs = idxs.sort (a,b) -> b - a
     for i in idxs

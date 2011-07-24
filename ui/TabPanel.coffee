@@ -1,7 +1,7 @@
 #### Contains a collection of Panels, displayed one at a time
 class Wiggy.ui.TabPanel extends Wiggy.ui.DynamicContainer
   constructor: (config) ->
-    # Set the item types to panels, and hide them by default
+    # Set the item types to **Wiggy.ui.Panel**, and hide them by default
     for item, idx in config.items
       item.widget   = Wiggy.ui.Panel
       item.element ?= { }

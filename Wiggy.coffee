@@ -30,10 +30,10 @@ Wiggy =
   generateId: ->
     gen = () -> 'wiggy-' + (Math.random() * 0x10000 | 0)
 
-    # Generate a random id
+    # Generate a random **id**
     id = gen()
 
-    # Should the id exist in the document, start generation loop until we get a
+    # Should the **id** exist in the document, start generation loop until we get a
     # unique one
     id = gen() while document.getElementById id
 
@@ -44,7 +44,7 @@ Wiggy =
       # Given an instance of a Widget, return it
       return obj
     else if obj.hasOwnProperty 'widget'
-      # Given a config, create an instance of the widget
+      # Given a config, create an instance of the Widget
       return new obj.widget obj
     null
 
@@ -53,10 +53,12 @@ Wiggy =
   # instantiated Widgets. If receiving a single widget config, it will return a
   # single instantiated Widget.
   #
-  # If only one result type is desired, wrap arguments inside of an array like
-  # this *(forces returned value to be a Sequence)*:
+  # Wrap arguments inside of an array, like the following line, when only a single
+  # type of return value is desired:
   #
   #      Wiggy.make [ config ] 
+  #
+  # This forces the result to always be a **Wiggy.data.Sequence**
   make: (args...) ->
     if args.length is 1 and args[0] not instanceof Array
       return Wiggy.create args[0]
@@ -82,17 +84,17 @@ Wiggy =
         parent[pt] = {} if not parent[pt]?
         parent = parent[pt]
 
-  # Alias jQuery as Wiggy.dom
+  # Alias **jQuery** as Wiggy.**dom**
   dom: jQuery
 
 # Coffeescript places all code in a function literal, so to expose the objects
-# we need to assign it to window.
+# we need to assign it to **window**.
 window.Wiggy = Wiggy
 
-# Also worth mentioning is that even if we do not assign the Wiggy singleton to
+# *Also worth mentioning is that even if we do not assign the Wiggy singleton to
 # window.Wiggy, the register function will still create the namespaces in
 # window (they will not be available in this scope and things will break 
-# immediately).
+# immediately).*
 Wiggy.register(
   'Wiggy.mixin'
   'Wiggy.util'

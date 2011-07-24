@@ -38,7 +38,8 @@ class Wiggy.ui.Window extends Wiggy.ui.Widget
     unless @titlebar instanceof Wiggy.ui.Titlebar
       @titlebar = new Wiggy.ui.Titlebar @titlebar
     
-    # We need these ids to figure out whether the move event should be aborted
+    # We need these ids to figure out whether the **move** event should be aborted
+    # if the click occurred in one of this titlebar's buttons.
     @titlebarButtonIds = @titlebar.buttons.items.each (btn) => btn.id
 
     unless @body instanceof Wiggy.ui.Panel

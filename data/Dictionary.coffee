@@ -1,6 +1,6 @@
 #### An evented associative array.
 # *Wraps a new javascript object with added functionality for events and 
-# other conveniance functions (has, each, etc)*
+# other conveniance functions (**has**, **each**, etc)*
 class Wiggy.data.Dictionary
   Wiggy.mixin.Observable @
   Wiggy.mixin.Properties @
@@ -26,8 +26,8 @@ class Wiggy.data.Dictionary
   get: (key) -> @items[key]
 
   onAdd: (key, val) =>
-    # if the key is not in all increment the len, otherwise we're just
-    # settings an existing key to a new value (len stays the same)
+    # If the **key** is not in **@items** increment the **@length**, otherwise
+    # we're just settings an existing key to a new value (**@length** stays the same)
     @length++ unless @has key
     @items[key] = val
 

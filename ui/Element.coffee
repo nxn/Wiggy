@@ -1,6 +1,6 @@
 #### Wrapper for simple dom elements
 # *The main difference from a Widget is that this does not implement the
-# Observable mixin. The 'render' and 'dispose' methods are not dispatching
+# Observable mixin. The **render** and **dispose** methods are not dispatching
 # any events, but they do allow Elements to be members of a Container.*
 class Wiggy.ui.Element
   Wiggy.mixin.Properties @

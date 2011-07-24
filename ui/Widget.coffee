@@ -2,7 +2,7 @@
 # *All widgets should inherit from this class to get basic functionality, events,
 # and to be placed in the Widget Collection.*
 class Wiggy.ui.Widget
-  # Add event functions via Observable mixin
+  # Add event functions via **Observable** mixin
   Wiggy.mixin.Observable @
   
   # Stores a collection of all the objects that derive from this class for quick

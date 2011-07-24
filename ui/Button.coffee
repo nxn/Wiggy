@@ -1,7 +1,7 @@
 #### A clickable button widget
 class Wiggy.ui.Button extends Wiggy.ui.Widget
   constructor: (config) ->
-    # Default the element type to 'button'
+    # Default the element node type to **button**
     config ?= {}
     config.element ?= {}
     config.element.nodeType ?= "button"
@@ -36,10 +36,10 @@ class Wiggy.ui.Button extends Wiggy.ui.Widget
     else
       $button.html @text
 
-    # Add listener to dom object that dispatches this object's click event which
-    # in turn will invoke the @handler if the button isn't disabled.
+    # Add listener to dom object that dispatches this object's **click** event which
+    # in turn will invoke the **@handler** if the button isn't disabled.
     #
-    # *NOTE: This is such a cheesy way of doing this -- think of something # less
+    # *NOTE: This is such a cheesy way of doing this -- think of something less
     # error prone*
     $button.click (e) => @click arguments...
     $button.addClass 'wiggy-button'
