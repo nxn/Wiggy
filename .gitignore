@@ -1,0 +1,5 @@
+data/*
+mixins/*
+ui/*
+Wiggy.coffee
+css/*.sass
