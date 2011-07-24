@@ -42,8 +42,7 @@ result sequence and return it.</p>             </td>             <td class="code
     <span class="k">for</span> <span class="nx">item</span> <span class="k">in</span> <span class="nx">items</span>
       <span class="nx">@items</span><span class="p">.</span><span class="nx">push</span> <span class="nx">item</span>
 
-  <span class="nv">onInsert: </span><span class="p">(</span><span class="nx">idx</span><span class="p">,</span> <span class="nx">val</span><span class="p">)</span> <span class="o">=&gt;</span>
-    <span class="nx">@items</span><span class="p">.</span><span class="nx">splice</span> <span class="nx">idx</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">val</span>
+  <span class="nv">onInsert: </span><span class="p">(</span><span class="nx">idx</span><span class="p">,</span> <span class="nx">val</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">@items</span><span class="p">.</span><span class="nx">splice</span> <span class="nx">idx</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">val</span>
 
   <span class="nv">onRemove: </span><span class="p">(</span><span class="nx">idxs</span><span class="p">...)</span> <span class="o">=&gt;</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>Sort indexes by descending order to ensure we don't offset items
 located before our next deletion index</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">idxs = </span><span class="nx">idxs</span><span class="p">.</span><span class="nx">sort</span> <span class="nf">(a,b) -&gt;</span> <span class="nx">b</span> <span class="o">-</span> <span class="nx">a</span>
