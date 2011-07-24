@@ -102,7 +102,7 @@
     for (var i = 1; i <= 4; i++) {
       panels.push(
         { title: 'Panel ' + i
-        , layout: '| [content] |'
+        , blueprint: '| [content] |'
         , items:
           { content:
             { widget: Wiggy.ui.Element
@@ -130,7 +130,7 @@
       , height: 200
       , titlebar: { text: 'Welcome' }
       , body:
-        { layout:
+        { blueprint:
           '|-15-[ msg               ]-15-|' +
           '|        [ lbl ]-8-[ btn ]-15-|'
         , items:
