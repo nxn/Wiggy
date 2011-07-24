@@ -1,6 +1,6 @@
 #### Used in Windows to show the title and provide basic minimize, maximize, and close functionality
-# *Important: This class will most likely inherit from Wiggy.ui.LayoutContainer
-# or Wiggy.ui.Panel as soon as visual layouts are implemented.*
+# *Important: This class will most likely inherit from Wiggy.ui.BlueprintContainer
+# or Wiggy.ui.Panel as soon as blueprint layouts are implemented.*
 class Wiggy.ui.Titlebar extends Wiggy.ui.Widget
   constructor: (config) ->
     super config

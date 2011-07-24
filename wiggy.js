@@ -679,14 +679,14 @@ shift(),i.sort());if(!!e&&!f.event.customEvent[h]||!!f.event.global[h]){c=typeof
     };
     return DynamicContainer;
   })();
-  Wiggy.ui.LayoutContainer = (function() {
-    __extends(LayoutContainer, Wiggy.ui.Widget);
-    function LayoutContainer(config) {
+  Wiggy.ui.BlueprintContainer = (function() {
+    __extends(BlueprintContainer, Wiggy.ui.Widget);
+    function BlueprintContainer(config) {
       this.onRender = __bind(this.onRender, this);
       var item, items, key;
-      LayoutContainer.__super__.constructor.call(this, config);
+      BlueprintContainer.__super__.constructor.call(this, config);
       if (config != null) {
-        items = config.items, this.layout = config.layout;
+        items = config.items, this.blueprint = config.blueprint;
       }
       if (items == null) {
         items = {};
@@ -702,12 +702,12 @@ shift(),i.sort());if(!!e&&!f.event.customEvent[h]||!!f.event.global[h]){c=typeof
         return _results;
       })();
     }
-    LayoutContainer.prototype.onRender = function(parent, idx) {
+    BlueprintContainer.prototype.onRender = function(parent, idx) {
       var item, key, _ref, _results;
       if (this.rendered) {
         return this;
       }
-      LayoutContainer.__super__.onRender.apply(this, arguments);
+      BlueprintContainer.__super__.onRender.apply(this, arguments);
       _ref = this.items;
       _results = [];
       for (key in _ref) {
@@ -717,7 +717,7 @@ shift(),i.sort());if(!!e&&!f.event.customEvent[h]||!!f.event.global[h]){c=typeof
       }
       return _results;
     };
-    return LayoutContainer;
+    return BlueprintContainer;
   })();
   Wiggy.ui.Button = (function() {
     __extends(Button, Wiggy.ui.Widget);
@@ -863,7 +863,7 @@ shift(),i.sort());if(!!e&&!f.event.customEvent[h]||!!f.event.global[h]){c=typeof
     return ButtonGroup;
   })();
   Wiggy.ui.Panel = (function() {
-    __extends(Panel, Wiggy.ui.LayoutContainer);
+    __extends(Panel, Wiggy.ui.BlueprintContainer);
     function Panel(config) {
       this.onRender = __bind(this.onRender, this);
       var _ref, _ref2;

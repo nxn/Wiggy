@@ -18,7 +18,7 @@ files  = [
   "ui/Element.coffee"
   "ui/Widget.coffee"
   "ui/DynamicContainer.coffee"
-  "ui/LayoutContainer.coffee"
+  "ui/BlueprintContainer.coffee"
   "ui/Button.coffee"
   "ui/ButtonGroup.coffee"
   "ui/Panel.coffee"
