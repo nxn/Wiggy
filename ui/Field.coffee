@@ -1,5 +1,5 @@
 #### Base class for form fields
-# *Important: @label will be refactored to be its own widget type. Substantial
+# *Important: **@label** will be refactored to be its own widget type. Substantial
 # changes will be made here*
 class Wiggy.ui.Field extends Wiggy.ui.Widget
   constructor: (config) ->
