@@ -1,0 +1,52 @@
+<!DOCTYPE html>  <html> <head>   <title>Field.coffee</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="Wiggy.html">                 Wiggy.coffee               </a>                                           <a class="source" href="Dictionary.html">                 Dictionary.coffee               </a>                                           <a class="source" href="Sequence.html">                 Sequence.coffee               </a>                                           <a class="source" href="Observable.html">                 Observable.coffee               </a>                                           <a class="source" href="Properties.html">                 Properties.coffee               </a>                                           <a class="source" href="Button.html">                 Button.coffee               </a>                                           <a class="source" href="ButtonGroup.html">                 ButtonGroup.coffee               </a>                                           <a class="source" href="Checkbox.html">                 Checkbox.coffee               </a>                                           <a class="source" href="DynamicContainer.html">                 DynamicContainer.coffee               </a>                                           <a class="source" href="Element.html">                 Element.coffee               </a>                                           <a class="source" href="Field.html">                 Field.coffee               </a>                                           <a class="source" href="LayoutContainer.html">                 LayoutContainer.coffee               </a>                                           <a class="source" href="Panel.html">                 Panel.coffee               </a>                                           <a class="source" href="Radiobutton.html">                 Radiobutton.coffee               </a>                                           <a class="source" href="Searchfield.html">                 Searchfield.coffee               </a>                                           <a class="source" href="TabPanel.html">                 TabPanel.coffee               </a>                                           <a class="source" href="Textarea.html">                 Textarea.coffee               </a>                                           <a class="source" href="Textfield.html">                 Textfield.coffee               </a>                                           <a class="source" href="Titlebar.html">                 Titlebar.coffee               </a>                                           <a class="source" href="Widget.html">                 Widget.coffee               </a>                                           <a class="source" href="Window.html">                 Window.coffee               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               Field.coffee             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <h3>Base class for form fields</h3>
+
+<p><em>Important: @label will be refactored to be its own widget type. Substantial
+changes will be made here</em></p>             </td>             <td class="code">               <div class="highlight"><pre><span class="k">class</span> <span class="nx">Wiggy</span><span class="p">.</span><span class="nx">ui</span><span class="p">.</span><span class="nx">Field</span> <span class="k">extends</span> <span class="nx">Wiggy</span><span class="p">.</span><span class="nx">ui</span><span class="p">.</span><span class="nx">Widget</span>
+  <span class="nv">constructor: </span><span class="nf">(config) -&gt;</span>
+    <span class="k">super</span> <span class="nx">config</span>
+    <span class="p">{</span> <span class="nx">@name</span>
+      <span class="nx">@value</span>
+      <span class="nx">@showLabel</span>
+    <span class="p">}</span> <span class="o">=</span> <span class="nx">config</span> <span class="k">if</span> <span class="nx">config</span><span class="o">?</span>
+
+    <span class="nx">@showLabel</span> <span class="o">?=</span> <span class="kc">true</span>
+
+    <span class="vi">@label = </span><span class="k">new</span> <span class="nx">Wiggy</span><span class="p">.</span><span class="nx">ui</span><span class="p">.</span><span class="nx">Element</span>
+      <span class="nv">nodeType: </span><span class="s2">&quot;label&quot;</span>
+      <span class="nv">cssClass: </span><span class="s1">&#39;wiggy-label&#39;</span>
+    <span class="nx">@label</span><span class="p">.</span><span class="nx">dom</span><span class="p">.</span><span class="nx">attr</span> <span class="s1">&#39;for&#39;</span><span class="p">,</span> <span class="nx">@id</span>
+
+    <span class="nx">@setLabelText</span> <span class="nx">config</span><span class="p">.</span><span class="nx">labelText</span> <span class="k">if</span> <span class="nx">config</span><span class="o">?</span><span class="p">.</span><span class="nx">labelText</span><span class="o">?</span>
+
+  <span class="nv">setLabelText: </span><span class="nf">(@labelText) -&gt;</span>
+    <span class="nx">@label</span><span class="p">.</span><span class="nx">dom</span><span class="p">.</span><span class="nx">html</span> <span class="nx">@labelText</span>
+    <span class="err">@</span>
+
+  <span class="nv">onShow: </span><span class="o">=&gt;</span>
+    <span class="k">super</span><span class="p">()</span>
+    <span class="nx">@label</span><span class="p">.</span><span class="nx">dom</span><span class="p">.</span><span class="nx">show</span> <span class="k">if</span> <span class="nx">@showLabel</span>
+
+  <span class="nv">onHide: </span><span class="o">=&gt;</span>
+    <span class="k">super</span><span class="p">()</span>
+    <span class="nx">@label</span><span class="p">.</span><span class="nx">dom</span><span class="p">.</span><span class="nx">hide</span><span class="p">()</span>
+
+  <span class="nv">onDisable: </span><span class="o">=&gt;</span>
+    <span class="k">super</span><span class="p">()</span>
+    <span class="nx">@label</span><span class="p">.</span><span class="nx">dom</span><span class="p">.</span><span class="nx">css</span> <span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="s1">&#39;#999&#39;</span>
+
+  <span class="nv">onEnable: </span><span class="o">=&gt;</span>
+    <span class="k">super</span><span class="p">()</span>
+    <span class="nx">@label</span><span class="p">.</span><span class="nx">dom</span><span class="p">.</span><span class="nx">css</span> <span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="s1">&#39;#000&#39;</span>
+
+  <span class="nv">onRender: </span><span class="p">(</span><span class="nx">parent</span><span class="p">,</span> <span class="nx">idx</span><span class="p">)</span> <span class="o">=&gt;</span>
+    <span class="k">return</span> <span class="err">@</span> <span class="k">if</span> <span class="nx">@rendered</span>
+    <span class="k">super</span> <span class="nx">arguments</span><span class="p">...</span>
+
+    <span class="nv">$field = </span><span class="nx">@element</span><span class="p">.</span><span class="nx">dom</span>
+    <span class="nx">$field</span><span class="p">.</span><span class="nx">attr</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span>  <span class="nx">@name</span>  <span class="k">if</span> <span class="nx">@name</span><span class="o">?</span>
+    <span class="nx">$field</span><span class="p">.</span><span class="nx">attr</span> <span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="nx">@value</span> <span class="k">if</span> <span class="nx">@value</span><span class="o">?</span>
+
+    <span class="nx">$field</span><span class="p">.</span><span class="nx">before</span> <span class="nx">@label</span><span class="p">.</span><span class="nx">dom</span> <span class="k">if</span> <span class="nx">@showLabel</span>
+    <span class="nx">@label</span><span class="p">.</span><span class="nx">dom</span><span class="p">.</span><span class="nx">css</span> <span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="s1">&#39;#999&#39;</span> <span class="k">if</span> <span class="nx">@disabled</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
