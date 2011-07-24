@@ -1,4 +1,4 @@
-### A clickable button widget.
+#### A clickable button widget
 class Wiggy.ui.Button extends Wiggy.ui.Widget
   constructor: (config) ->
     # Default the element type to 'button'

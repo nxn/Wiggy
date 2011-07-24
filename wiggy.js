@@ -719,54 +719,64 @@ shift(),i.sort());if(!!e&&!f.event.customEvent[h]||!!f.event.global[h]){c=typeof
     };
     return LayoutContainer;
   })();
-  /* A clickable button widget.
-  class Wiggy.ui.Button extends Wiggy.ui.Widget
-    constructor: (config) ->
-      # Default the element type to 'button'
-      config ?= {}
-      config.element ?= {}
-      config.element.nodeType ?= "button"
-  
-      if config?.element?.nodeType is 'input'
-        config.element.inputType = 'button'
-  
-      super config
-  
-      { @text, click } = config
-  
-      @text ?= ""
-      @handler = click
-  
-      @on 'click', @onClick
-  
-    onClick: =>
-      return false if @disabled
-      @handler arguments... if @handler?
-      
-    setText: (@text) =>
-      @element.dom.html @text
-  
-    onRender: (parent, idx) =>
-      return @ if @rendered
-      super arguments...
-  
-      $button = @element.dom
-  
-      if @element.htmlObject.tagName is "INPUT"
-        $button.attr 'value', @text
-      else
-        $button.html @text
-  
-      # Add listener to dom object that dispatches this object's click event which
-      # in turn will invoke the @handler if the button isn't disabled.
-      #
-      # *NOTE: This is such a cheesy way of doing this -- think of something # less
-      # error prone*
-      $button.click (e) => @click arguments...
-      $button.addClass 'wiggy-button'
-  
-  
-  */
+  Wiggy.ui.Button = (function() {
+    __extends(Button, Wiggy.ui.Widget);
+    function Button(config) {
+      this.onRender = __bind(this.onRender, this);
+      this.setText = __bind(this.setText, this);
+      this.onClick = __bind(this.onClick, this);
+      var click, _base, _ref, _ref2, _ref3, _ref4;
+      if (config == null) {
+        config = {};
+      }
+      if ((_ref = config.element) == null) {
+        config.element = {};
+      }
+      if ((_ref2 = (_base = config.element).nodeType) == null) {
+        _base.nodeType = "button";
+      }
+      if ((config != null ? (_ref3 = config.element) != null ? _ref3.nodeType : void 0 : void 0) === 'input') {
+        config.element.inputType = 'button';
+      }
+      Button.__super__.constructor.call(this, config);
+      this.text = config.text, click = config.click;
+      if ((_ref4 = this.text) == null) {
+        this.text = "";
+      }
+      this.handler = click;
+      this.on('click', this.onClick);
+    }
+    Button.prototype.onClick = function() {
+      if (this.disabled) {
+        return false;
+      }
+      if (this.handler != null) {
+        return this.handler.apply(this, arguments);
+      }
+    };
+    Button.prototype.setText = function(text) {
+      this.text = text;
+      return this.element.dom.html(this.text);
+    };
+    Button.prototype.onRender = function(parent, idx) {
+      var $button;
+      if (this.rendered) {
+        return this;
+      }
+      Button.__super__.onRender.apply(this, arguments);
+      $button = this.element.dom;
+      if (this.element.htmlObject.tagName === "INPUT") {
+        $button.attr('value', this.text);
+      } else {
+        $button.html(this.text);
+      }
+      $button.click(__bind(function(e) {
+        return this.click.apply(this, arguments);
+      }, this));
+      return $button.addClass('wiggy-button');
+    };
+    return Button;
+  })();
   Wiggy.ui.ButtonGroup = (function() {
     var _deselect, _select;
     __extends(ButtonGroup, Wiggy.ui.DynamicContainer);
