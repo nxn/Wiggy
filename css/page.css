@@ -1,0 +1,60 @@
+@font-face
+{ font-family: 'AirstreamRegular'
+; src: url('../fonts/Airstream-webfont.eot')
+; src: url('../fonts/Airstream-webfont.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/Airstream-webfont.woff') format('woff'),
+       url('../fonts/Airstream-webfont.ttf') format('truetype'),
+       url('../fonts/Airstream-webfont.svg#AirstreamRegular') format('svg')
+; font-weight: normal
+; font-style: normal
+}
+  #header
+{ margin-left: 15px
+}
+  .column
+{ float: left
+; padding: 0px
+; overflow: visible
+; margin: 15px
+}
+  body
+{ color: #222
+/*; background-color: #4A525A*/
+; background-color: #efefef
+; font-family: Arial, Verdana, Tahoma
+; font-size: 10pt
+; margin: 0px
+; padding: 15px
+}
+  h1, h2, h3, h4
+{ text-shadow: 0px 1px 0px #fff
+; margin: 0px
+}
+  h2, h3, h4
+{ font-size: 12pt
+}
+  h1
+{ font-size: 48pt
+; font-family: 'AirstreamRegular'
+; font-weight: normal
+}
+  h2
+{ color: #0d3346
+}
+  h4
+{ font-size: 9pt
+; margin-top: 20px
+; font-weight: normal
+}
+  .wiggy-tabpanel h2
+{ margin: 10px 0px
+}
+  .blue
+{ color: #0d3346
+}
+  .light-blue
+{ color: #83b0ca
+}
+  .bold
+{ font-weight: bold
+}
