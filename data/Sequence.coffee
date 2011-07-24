@@ -42,8 +42,7 @@ class Wiggy.data.Sequence
 
   get: (idx) -> @items[idx]
 
-  onSet: (idx, val) =>
-    @items[idx] = val
+  onSet: (idx, val) => @items[idx] = val
 
   onAdd: (items...) =>
     for item in items
