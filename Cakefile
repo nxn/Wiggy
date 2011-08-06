@@ -39,6 +39,7 @@ files   = [
 
 option '-o', '--output [FILE]', 'Output filename'
 option '-m', '--minified',      'Minify the output'
+option '-d', '--docs',          'Generate Documentation'
 
 task 'build', 'Build wiggy and tests suite', (options) ->
   print "#{yellow}[ Starting Build ]#{reset}\n"
@@ -82,10 +83,9 @@ buildWiggy = (options, cb) ->
       generateBlueprintParser ws, ->
         ws.end()
 
-        m = (cb) ->
-          minify options, cb
-
-        sync m, generateDocs, buildSucceeded
+        m = (cb) -> minify options, cb
+        d = (cb) -> generateDocs options, cb
+        sync m, d, buildSucceeded
 
 writeDependencies = (ws, cb) ->
   deps = fs.readdirSync 'deps'
@@ -134,7 +134,11 @@ generateBlueprintParser = (ws, cb) ->
 
     if written then done() else ws.on 'drain', done
 
-generateDocs = (cb) ->
+generateDocs = (opts, cb) ->
+  unless opts.docs
+    cb() if cb?
+    return
+
   print "| #{cyan}Updating Documentation ... #{reset}\n"
   exec 'docco ' + files.join(' '), ->
     cb() if cb?

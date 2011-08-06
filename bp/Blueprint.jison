@@ -13,60 +13,60 @@
 
 /lex
 
-%start BLUEPRINT
+%start blueprint
 
 %% /* Blueprint Grammar */
 
-BLUEPRINT
-  : ROWLIST EOF
+blueprint
+  : rowlist EOF
   ;
 
-ROWLIST
-  : ROW
-  | ROW ROWLIST
+rowlist
+  : row
+  | row rowlist
   ;
 
-ROW
-  : '|' MARGIN ITEMLIST MARGIN '|'
+row
+  : '|' margin itemlist margin '|'
   ;
 
-ITEMLIST
-  : ITEM
-  | ITEMLIST MARGIN ITEM
+itemlist
+  : item
+  | itemlist margin item
   ;
 
-ITEM
-  : '[' IDENT SIZE ']'
+item
+  : '[' IDENT size ']'
   ;
 
-MARGIN
-  : PIXELS
+margin
+  : pixels
   |
   ;
 
-PIXELS
+pixels
   : NUMBER
   | '*'
   ;
 
-SIZE
-  : PIXELS
-  | HSPAN
-  | VSPAN
-  | PIXELS PIXELS
-  | PIXELS HSPAN
-  | PIXELS VSPAN
-  | HSPAN  PIXELS
-  | VSPAN  PIXELS
-  | HSPAN  VSPAN
-  | VSPAN  HSPAN
+size
+  : pixels
+  | hspan
+  | vspan
+  | pixels pixels
+  | pixels hspan
+  | pixels vspan
+  | hspan pixels
+  | vspan pixels
+  | hspan vspan
+  | vspan hspan
   |
   ;
 
-HSPAN
-  : NUMBER '-' PIXELS
+hspan
+  : NUMBER '-' pixels
   ;
 
-VSPAN
-  : NUMBER '|' PIXELS
+vspan
+  : NUMBER '|' pixels
   ;
