@@ -2,11 +2,52 @@
 
 <p><em>The main difference from a Widget is that this does not implement the
 Observable mixin. The <strong>render</strong> and <strong>dispose</strong> methods are not dispatching
-any events, but they do allow Elements to be members of a Container.</em></p>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>The <strong>dom</strong> property only creates an actual HTML dom object when accessed the
+any events, but they do allow Elements to be members of a Container.</em></p>             </td>             <td class="code">               <div class="highlight"><pre><span class="k">class</span> <span class="nx">Wiggy</span><span class="p">.</span><span class="nx">ui</span><span class="p">.</span><span class="nx">Element</span>
+  <span class="nx">Wiggy</span><span class="p">.</span><span class="nx">mixin</span><span class="p">.</span><span class="nx">Properties</span> <span class="err">@</span>
+
+  <span class="nv">constructor: </span><span class="nf">(config) -&gt;</span>
+    <span class="p">{</span> <span class="nx">id</span>
+      <span class="nx">nodeType</span>
+      <span class="nx">inputType</span>
+      <span class="nx">cssClass</span>
+      <span class="nx">style</span>
+      <span class="nx">html</span>
+    <span class="p">}</span> <span class="o">=</span> <span class="nx">config</span> <span class="k">if</span> <span class="nx">config</span><span class="o">?</span>
+
+    <span class="nx">style</span>    <span class="o">?=</span> <span class="p">{}</span>
+    <span class="nx">nodeType</span> <span class="o">?=</span> <span class="s2">&quot;div&quot;</span>
+    <span class="nx">html</span>     <span class="o">?=</span> <span class="s2">&quot;&quot;</span>
+    <span class="vi">@parent   = </span><span class="nx">config</span><span class="o">?</span><span class="p">.</span><span class="nx">parent</span> <span class="o">or</span> <span class="nb">document</span><span class="p">.</span><span class="nx">body</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>The <strong>dom</strong> property only creates an actual HTML dom object when accessed the
 first time. After that the reference to the already created one is
 returned. This means that this class can be instantiated/disposed without
-necessarily affecting the DOM.</p>             </td>             <td class="code">               <div class="highlight"><pre>undefined</pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p><strong>dom</strong> is a jQuery object, if we want the actual HTML dom object we can get
-it by the <strong>htmlObject</strong> property.</p>             </td>             <td class="code">               <div class="highlight"><pre>undefined</pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>The index where we will be inserting this dom object inside of the <strong>parent</strong>
+necessarily affecting the DOM.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">node = </span><span class="kc">null</span>
+    <span class="nx">@property</span> <span class="s1">&#39;dom&#39;</span><span class="p">,</span> <span class="nv">get: </span><span class="o">-&gt;</span>
+      <span class="nx">unless</span> <span class="nx">node</span><span class="o">?</span>
+        <span class="k">if</span> <span class="nx">nodeType</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span> <span class="o">is</span> <span class="s1">&#39;input&#39;</span>
+          <span class="nv">node = </span><span class="nx">Wiggy</span><span class="p">.</span><span class="nx">dom</span> <span class="s2">&quot;&lt;input /&gt;&quot;</span><span class="p">,</span> <span class="nv">type: </span><span class="nx">inputType</span>
+        <span class="k">else</span>
+          <span class="nv">node = </span><span class="nx">Wiggy</span><span class="p">.</span><span class="nx">dom</span> <span class="s2">&quot;&lt;#{ nodeType }&gt;&lt;/#{ nodeType }&gt;&quot;</span>
+        <span class="nx">node</span><span class="p">.</span><span class="nx">attr</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="nx">id</span> <span class="k">if</span> <span class="nx">id</span><span class="o">?</span>
+        <span class="nx">node</span><span class="p">.</span><span class="nx">css</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">val</span> <span class="k">for</span> <span class="nx">own</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">val</span> <span class="k">of</span> <span class="nx">style</span>
+        <span class="nx">node</span><span class="p">.</span><span class="nx">html</span> <span class="nx">html</span>
+        <span class="nx">node</span><span class="p">.</span><span class="nx">addClass</span> <span class="nx">cssClass</span>
+      <span class="nx">node</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p><strong>dom</strong> is a jQuery object, if we want the actual HTML dom object we can get
+it by the <strong>htmlObject</strong> property.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">@property</span> <span class="s1">&#39;htmlObject&#39;</span><span class="p">,</span> <span class="nv">get: </span><span class="o">-&gt;</span> <span class="nx">@dom</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="nx">@property</span> <span class="s1">&#39;alreadyInDom&#39;</span><span class="p">,</span> <span class="nv">get: </span><span class="o">-&gt;</span> <span class="nx">@dom</span><span class="p">.</span><span class="nx">parent</span><span class="p">()</span><span class="o">?</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span>
+
+  <span class="nv">setStyle: </span><span class="nf">(style) -&gt;</span> <span class="nx">dom</span><span class="p">.</span><span class="nx">css</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">val</span> <span class="k">for</span> <span class="nx">own</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">val</span> <span class="k">of</span> <span class="nx">style</span>
+
+  <span class="nv">render: </span><span class="nf">(parent, idx) -&gt;</span>
+    <span class="nx">parent</span> <span class="o">?=</span> <span class="nx">@parent</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>The index where we will be inserting this dom object inside of the <strong>parent</strong>
 element is optional. If we didn't get one, we just append this dom object
-to the <strong>parent</strong>.</p>             </td>             <td class="code">               <div class="highlight"><pre>undefined</pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>Ensure <strong>parent</strong> is a jQuery object and not a simple HTML dom object by
-checking that it has a <strong>children</strong> function.</p>             </td>             <td class="code">               <div class="highlight"><pre>undefined</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
+to the <strong>parent</strong>.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">unless</span> <span class="nx">idx</span><span class="o">?</span>
+      <span class="nx">Wiggy</span><span class="p">.</span><span class="nx">dom</span><span class="p">(</span><span class="nx">parent</span><span class="p">).</span><span class="nx">append</span> <span class="nx">@dom</span>
+      <span class="k">return</span> <span class="err">@</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>Ensure <strong>parent</strong> is a jQuery object and not a simple HTML dom object by
+checking that it has a <strong>children</strong> function.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">unless</span> <span class="nx">parent</span><span class="p">.</span><span class="nx">children</span><span class="o">?</span>
+      <span class="nv">parent = </span><span class="nx">Wiggy</span><span class="p">.</span><span class="nx">dom</span> <span class="nx">parent</span>
+
+    <span class="nx">parent</span><span class="p">.</span><span class="nx">children</span><span class="p">().</span><span class="nx">eq</span><span class="p">(</span><span class="nx">idx</span><span class="p">).</span><span class="nx">before</span> <span class="nx">@dom</span>
+
+  <span class="nv">dispose: </span><span class="o">-&gt;</span> <span class="nx">@dom</span><span class="p">.</span><span class="nx">remove</span><span class="p">()</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

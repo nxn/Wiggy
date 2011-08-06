@@ -1,5 +1,54 @@
 <!DOCTYPE html>  <html> <head>   <title>Dictionary.coffee</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="Wiggy.html">                 Wiggy.coffee               </a>                                           <a class="source" href="Dictionary.html">                 Dictionary.coffee               </a>                                           <a class="source" href="Sequence.html">                 Sequence.coffee               </a>                                           <a class="source" href="Observable.html">                 Observable.coffee               </a>                                           <a class="source" href="Properties.html">                 Properties.coffee               </a>                                           <a class="source" href="BlueprintContainer.html">                 BlueprintContainer.coffee               </a>                                           <a class="source" href="Button.html">                 Button.coffee               </a>                                           <a class="source" href="ButtonGroup.html">                 ButtonGroup.coffee               </a>                                           <a class="source" href="Checkbox.html">                 Checkbox.coffee               </a>                                           <a class="source" href="DynamicContainer.html">                 DynamicContainer.coffee               </a>                                           <a class="source" href="Element.html">                 Element.coffee               </a>                                           <a class="source" href="Field.html">                 Field.coffee               </a>                                           <a class="source" href="Panel.html">                 Panel.coffee               </a>                                           <a class="source" href="Radiobutton.html">                 Radiobutton.coffee               </a>                                           <a class="source" href="Searchfield.html">                 Searchfield.coffee               </a>                                           <a class="source" href="TabPanel.html">                 TabPanel.coffee               </a>                                           <a class="source" href="Textarea.html">                 Textarea.coffee               </a>                                           <a class="source" href="Textfield.html">                 Textfield.coffee               </a>                                           <a class="source" href="Titlebar.html">                 Titlebar.coffee               </a>                                           <a class="source" href="Widget.html">                 Widget.coffee               </a>                                           <a class="source" href="Window.html">                 Window.coffee               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               Dictionary.coffee             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <h3>An evented associative array.</h3>
 
 <p><em>Wraps a new javascript object with added functionality for events and 
-other conveniance functions (<strong>has</strong>, <strong>each</strong>, etc)</em></p>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>If the <strong>key</strong> is not in <strong>@items</strong> increment the <strong>@length</strong>, otherwise
-we're just settings an existing key to a new value (<strong>@length</strong> stays the same)</p>             </td>             <td class="code">               <div class="highlight"><pre>undefined</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
+other conveniance functions (<strong>has</strong>, <strong>each</strong>, etc)</em></p>             </td>             <td class="code">               <div class="highlight"><pre><span class="k">class</span> <span class="nx">Wiggy</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">Dictionary</span>
+  <span class="nx">Wiggy</span><span class="p">.</span><span class="nx">mixin</span><span class="p">.</span><span class="nx">Observable</span> <span class="err">@</span>
+  <span class="nx">Wiggy</span><span class="p">.</span><span class="nx">mixin</span><span class="p">.</span><span class="nx">Properties</span> <span class="err">@</span>
+
+  <span class="nv">constructor: </span><span class="o">-&gt;</span>
+    <span class="vi">@items = </span><span class="p">{}</span>
+
+    <span class="nv">length = </span><span class="mi">0</span>
+    <span class="nx">@property</span> <span class="s1">&#39;length&#39;</span><span class="p">,</span>
+      <span class="nv">get: </span><span class="o">-&gt;</span> <span class="nx">length</span>
+      <span class="nv">set: </span><span class="nf">(val) -&gt;</span> <span class="nv">length = </span><span class="nx">val</span>
+
+    <span class="nx">@property</span> <span class="s1">&#39;isEmpty&#39;</span><span class="p">,</span> <span class="nv">get: </span><span class="o">-&gt;</span> <span class="nx">@length</span> <span class="o">is</span> <span class="mi">0</span>
+
+    <span class="nx">@on</span> <span class="s1">&#39;add&#39;</span><span class="p">,</span>      <span class="nx">@onAdd</span>
+    <span class="nx">@on</span> <span class="s1">&#39;set&#39;</span><span class="p">,</span>      <span class="nx">@onSet</span>
+    <span class="nx">@on</span> <span class="s1">&#39;addMany&#39;</span><span class="p">,</span>  <span class="nx">@onAddMany</span>
+    <span class="nx">@on</span> <span class="s1">&#39;remove&#39;</span><span class="p">,</span>   <span class="nx">@onRemove</span>
+    <span class="nx">@on</span> <span class="s1">&#39;clear&#39;</span><span class="p">,</span>    <span class="nx">@onClear</span>
+
+  <span class="nv">has: </span><span class="nf">(key) -&gt;</span> <span class="nx">@items</span><span class="p">.</span><span class="nx">hasOwnProperty</span> <span class="nx">key</span>
+
+  <span class="nv">get: </span><span class="nf">(key) -&gt;</span> <span class="nx">@items</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span>
+
+  <span class="nv">onAdd: </span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">val</span><span class="p">)</span> <span class="o">=&gt;</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>If the <strong>key</strong> is not in <strong>@items</strong> increment the <strong>@length</strong>, otherwise
+we're just settings an existing key to a new value (<strong>@length</strong> stays the same)</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">@length</span><span class="o">++</span> <span class="nx">unless</span> <span class="nx">@has</span> <span class="nx">key</span>
+    <span class="nx">@items</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">val</span>
+
+  <span class="nv">onAddMany: </span><span class="p">(</span><span class="nx">items</span><span class="p">...)</span> <span class="o">=&gt;</span>
+    <span class="k">for</span> <span class="nx">item</span> <span class="k">in</span> <span class="nx">items</span>
+      <span class="p">[</span><span class="nx">key</span><span class="p">,</span> <span class="nx">val</span><span class="p">]</span> <span class="o">=</span> <span class="nx">item</span>
+      <span class="nx">@add</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">val</span>
+
+  <span class="nv">onSet: </span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">val</span><span class="p">)</span> <span class="o">=&gt;</span>
+    <span class="k">if</span> <span class="nx">@has</span> <span class="nx">key</span>
+      <span class="nx">@items</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">val</span>
+    <span class="k">else</span>
+      <span class="nx">@add</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">val</span>
+
+  <span class="nv">onRemove: </span><span class="p">(</span><span class="nx">keys</span><span class="p">...)</span> <span class="o">=&gt;</span>
+    <span class="k">for</span> <span class="nx">k</span> <span class="k">in</span> <span class="nx">keys</span> <span class="k">when</span> <span class="nx">@has</span> <span class="nx">k</span>
+      <span class="k">delete</span> <span class="nx">@items</span><span class="p">[</span><span class="nx">k</span><span class="p">]</span>
+      <span class="nx">@length</span><span class="o">--</span>
+
+  <span class="nv">onClear: </span><span class="o">=&gt;</span>
+    <span class="vi">@items = </span><span class="p">{}</span>
+    <span class="vi">@length = </span><span class="mi">0</span>
+
+  <span class="nv">each: </span><span class="nf">(func) -&gt;</span> <span class="nx">func</span> <span class="nx">val</span><span class="p">,</span> <span class="nx">key</span> <span class="k">for</span> <span class="nx">own</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">val</span> <span class="k">of</span> <span class="nx">@items</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
