@@ -150,13 +150,12 @@ minify = (opts, cb) ->
     cb() if cb?
     return
 
-  jsp = require("uglify-js").parser
-  fug = require("uglify-js").uglify
+  { parser, uglify } = require("uglify-js")
 
   print "| #{cyan}Minifying ... #{reset}\n"
   fs.readFile opts.output, 'utf8', (err, data) ->
     exitWith err if err?
-    code = fug.gen_code fug.ast_squeeze fug.ast_mangle jsp.parse data
+    code = uglify.gen_code uglify.ast_squeeze uglify.ast_mangle parser.parse data
     fs.writeFile opts.output, code, 'utf8', ->
       cb() if cb?
 
