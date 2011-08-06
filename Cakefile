@@ -37,12 +37,6 @@ files   = [
   "ui/Radiobutton.coffee"
 ]
 
-# in the event minification is requested, these are the closure compiler
-# settings we'll need to use
-closureOptimization = "SIMPLE_OPTIMIZATIONS"
-closureOutputFormat = "text"
-closureOutputInfo   = "compiled_code"
-
 option '-o', '--output [FILE]', 'Output filename'
 option '-m', '--minified',      'Minify the output'
 
