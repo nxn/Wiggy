@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <style type="text/css">
+      *  { font-family: monospace
+         ; font-size: 10pt
+         }
+      body { padding: 25px }
+      .h { font-weight: bold
+         ; border-right: 1px dotted #aaa
+         ; padding-right: 25px
+         ; color: #505964
+         ; text-align: right
+         }
+      table { border-collapse: collapse }
+      td { padding-left: 25px
+         }
+      h1, h2 { font-size: 14pt
+             ; font-weight: bold
+             ; color: #373e46
+             ; padding: 0px
+             ; margin: 0px
+             }
+      h2 { font-size: 12pt }
+    </style>
+    <script type="text/javascript" src="Grammar.js"></script>
+    <script type="text/javascript">
+    </script>
+  </head>
+  <body>
+    <h1>BLUEPRINT GRAMMAR</h1>
+    <br />
+    <table>
+      <tr>
+        <td class="h">BLUEPRINT</td>
+        <td>
+          (&lt;<b>ROW</b>&gt;\n?)*
+        </td>
+      </tr>
+      <tr>
+        <td class="h">ROW</td>
+        <td>
+          \<b>|</b>
+          &lt;<b>PIXELS</b>&gt;?
+          (&lt;<b>ITEM</b>&gt;&lt;<b>PIXELS</b>&gt;?)*
+          &lt;<b>PIXELS</b>&gt;?
+          \<b>|</b>
+        </td>
+      </tr>
+      <tr>
+        <td class="h">PIXELS</td>
+        <td>
+          \d*|\<b>*</b>
+        </td>
+      </tr>
+      <tr>
+        <td class="h">ITEM</td>
+        <td>
+          <b>[</b>
+          &lt;<b>IDENT</b>&gt;
+          &lt;<b>HSIZE</b>&gt;?
+          &lt;<b>VSIZE</b>&gt;?
+          <b>]</b>
+        </td>
+      </tr>
+      <tr>
+        <td class="h">IDENT</td>
+        <td>
+          [a-zA-Z_$][0-9a-zA-Z_$]*
+        </td>
+      </tr>
+      <tr>
+        <td class="h">HSIZE</td>
+        <td>
+          <b>PIXELS</b>|\d*<b>-PIXELS</b>
+        </td>
+      </tr>
+      <tr>
+        <td class="h">VSIZE</td>
+        <td>
+          <b>PIXELS</b>|\d*<b>|PIXELS</b>
+        </td>
+      </tr>
+    </table>
+    <br /><br />
+    <h2>EXAMPLES</h2>
+    <pre>
+      | 15 [ IDENT0 50-75 25 ] 5 [ IDENT2 150-250 25      ] 15 | 
+      | 15 [ IDENT3 50-75 16 ] 5 [ IDENT4 150-250 100|300 ] 15 | 
+
+      | * [ IDENT0 50-75 25 ] 5 [ IDENT2 150-* 25    ] * |
+      | * [ IDENT3 50-75 16 ] 5 [ IDENT4 150-* 100|* ] * |
+    </pre>
+  </body>
+</html>
