@@ -40,8 +40,8 @@ item
   ;
 
 margin
-  : pixels
-  |
+  : /* empty */
+  | pixels
   ;
 
 pixels
@@ -50,7 +50,8 @@ pixels
   ;
 
 size
-  : pixels
+  : /* empty */
+  | pixels
   | hspan
   | vspan
   | pixels pixels
@@ -60,7 +61,6 @@ size
   | vspan pixels
   | hspan vspan
   | vspan hspan
-  |
   ;
 
 hspan
