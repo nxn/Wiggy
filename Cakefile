@@ -42,11 +42,7 @@ option '-m', '--minified',      'Minify the output'
 
 task 'build', 'Build wiggy and tests suite', (options) ->
   print "#{yellow}[ Starting Build ]#{reset}\n"
-  jobs = [ buildWiggy ]
-  done = ->
-    generateDocs() if jobs.length is 0
-  while job = jobs.pop()
-    job options, done
+  buildWiggy options
 
 task 'watch', 'Watch for code changes and recompile library when they happen', (options) ->
   print "#{yellow}Prebuilding and watching files for changes ... #{reset}\n"
@@ -77,7 +73,7 @@ task 'watch', 'Watch for code changes and recompile library when they happen', (
   watch file for file in files
   watch grammar
 
-buildWiggy = (options, callback) ->
+buildWiggy = (options, cb) ->
   filename = options.output or= 'wiggy.js'
 
   ws = fs.createWriteStream filename
@@ -85,8 +81,6 @@ buildWiggy = (options, callback) ->
     compile ws, ->
       generateBlueprintParser ws, ->
         generateDocs buildSucceeded
-
-
 
 generateDocs = (cb) ->
   print "| #{cyan}Updating Documentation ... #{reset}"
@@ -144,12 +138,12 @@ compile = (ws, cb) ->
 
 buildFailed = (data) ->
   error = true
-  print "\n#{red}[ Build Failed ]#{reset}\n#{data}\n"
+  print "#{red}[ Build Failed ]#{reset}\n#{data}\n"
 
 buildSucceeded = ->
   error = false
   print "#{green}[ Build Successful ]#{reset}\n"
 
 exitWith = (data) ->
-  reportError data
+  buildFailed data
   process.exit 1
