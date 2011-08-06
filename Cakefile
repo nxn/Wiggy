@@ -37,6 +37,12 @@ files   = [
   "ui/Radiobutton.coffee"
 ]
 
+# in the event minification is requested, these are the closure compiler
+# settings we'll need to use
+closureOptimization = "SIMPLE_OPTIMIZATIONS"
+closureOutputFormat = "text"
+closureOutputInfo   = "compiled_code"
+
 option '-o', '--output [FILE]', 'Output filename'
 option '-m', '--minified',      'Minify the output'
 
@@ -80,26 +86,12 @@ buildWiggy = (options, cb) ->
   writeDependencies ws, ->
     compile ws, ->
       generateBlueprintParser ws, ->
-        generateDocs buildSucceeded
+        ws.end()
 
-generateDocs = (cb) ->
-  print "| #{cyan}Updating Documentation ... #{reset}"
-  exec 'docco ' + files.join(' '), ->
-    print "#{green}DONE#{reset}\n"
-    cb() if cb?
+        m = (cb) ->
+          minify options, cb
 
-generateBlueprintParser = (ws, cb) ->
-  print "| #{cyan}Creating Blueprint Parser ... #{reset}"
-  fs.readFile grammar, 'utf8', (err, data) ->
-    exitWith err if err?
-    parser  = new Parser data
-    src     = parser.generate moduleName: 'Wiggy.bp.Parser'
-    written = ws.write src, 'utf8'
-    done    = ->
-      print "#{green}DONE#{reset}\n"
-      cb() if cb?
-
-    if written then done() else ws.on 'drain', done
+        sync m, generateDocs, buildSucceeded
 
 writeDependencies = (ws, cb) ->
   deps = fs.readdirSync 'deps'
@@ -130,11 +122,48 @@ compile = (ws, cb) ->
     print "| #{cyan}Compiling ... #{green}DONE#{reset}\n"
     cb() if cb?
 
-
   for f,i in files
     console.log "| - #{cyan}#{i+1}/#{files.length}#{reset} - #{f}"
     rs = fs.createReadStream f
     rs.pipe coffee.stdin
+
+generateBlueprintParser = (ws, cb) ->
+  print "| #{cyan}Creating Blueprint Parser ... #{reset}"
+  fs.readFile grammar, 'utf8', (err, data) ->
+    exitWith err if err?
+    parser  = new Parser data
+    src     = parser.generate moduleName: 'Wiggy.bp.Parser'
+    written = ws.write src, 'utf8'
+    done    = ->
+      print "#{green}DONE#{reset}\n"
+      cb() if cb?
+
+    if written then done() else ws.on 'drain', done
+
+generateDocs = (cb) ->
+  print "| #{cyan}Updating Documentation ... #{reset}\n"
+  exec 'docco ' + files.join(' '), ->
+    cb() if cb?
+
+minify = (opts, cb) ->
+  unless opts.minified
+    cb() if cb?
+    return
+
+  jsp = require("uglify-js").parser
+  fug = require("uglify-js").uglify
+
+  print "| #{cyan}Minifying ... #{reset}\n"
+  fs.readFile opts.output, 'utf8', (err, data) ->
+    exitWith err if err?
+    code = fug.gen_code fug.ast_squeeze fug.ast_mangle jsp.parse data
+    fs.writeFile opts.output, code, 'utf8', ->
+      cb() if cb?
+
+sync = (fns..., cb) ->
+  remaining = fns.length
+  for fn in fns
+    fn -> cb() if --remaining is 0 and cb
 
 buildFailed = (data) ->
   error = true
