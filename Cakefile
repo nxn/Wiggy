@@ -1,15 +1,19 @@
-fs = require 'fs'
-{print} = require 'util'
-{join} = require 'path'
-{spawn, exec} = require 'child_process'
+require.paths.push '/usr/local/lib/node_modules'
 
-red    = '\033[1;31m'
-green  = '\033[0;32m'
-cyan   = '\033[0;36m'
-yellow = '\033[0;33m'
-reset  = '\033[0m'
-error  = false
-files  = [
+fs            = require 'fs'
+{print}       = require 'util'
+{join}        = require 'path'
+{spawn, exec} = require 'child_process'
+{Parser}      = require 'jison'
+
+red     = '\033[1;31m'
+green   = '\033[0;32m'
+cyan    = '\033[0;36m'
+yellow  = '\033[0;33m'
+reset   = '\033[0m'
+error   = false
+grammar = 'bp/Blueprint.jison'
+files   = [
   "Wiggy.coffee"
   "mixins/Observable.coffee"
   "mixins/Properties.coffee"
@@ -40,7 +44,7 @@ task 'build', 'Build wiggy and tests suite', (options) ->
   print "#{yellow}[ Starting Build ]#{reset}\n"
   jobs = [ buildWiggy ]
   done = ->
-    generateDocs files if jobs.length is 0
+    generateDocs() if jobs.length is 0
   while job = jobs.pop()
     job options, done
 
@@ -49,7 +53,6 @@ task 'watch', 'Watch for code changes and recompile library when they happen', (
 
   # perform a build on startup
   buildWiggy options
-  generateDocs files
 
   build = (modifiedFile) ->
     # reset the error status each time before building
@@ -66,98 +69,78 @@ task 'watch', 'Watch for code changes and recompile library when they happen', (
     buildWiggy options
 
   # attach listeners for all files to track changes and bind to builds
-  for file in files
-    do (file) ->
-      fs.watchFile file, (curr, prev) ->
-        if curr.mtime.getTime() != prev.mtime.getTime()
-          build file
-          generateDocs [file]
+  watch = (file) ->
+    fs.watchFile file, (curr, prev) ->
+      if curr.mtime.getTime() != prev.mtime.getTime()
+        build file
 
-generateDocs = ->
-  print "| #{cyan}Updating Documentation ... #{reset}\n"
-  exec 'docco ' + files.join(' ')
-  
+  watch file for file in files
+  watch grammar
+
 buildWiggy = (options, callback) ->
   filename = options.output or= 'wiggy.js'
 
+  ws = fs.createWriteStream filename
+  writeDependencies ws, ->
+    compile ws, ->
+      generateBlueprintParser ws, ->
+        generateDocs buildSucceeded
 
-  # setup output file and call the compile function -- will call attachDependencies
-  # when compilation is done
-  fs.open filename, 'w', 0666, (err, fd) ->
+
+
+generateDocs = (cb) ->
+  print "| #{cyan}Updating Documentation ... #{reset}"
+  exec 'docco ' + files.join(' '), ->
+    print "#{green}DONE#{reset}\n"
+    cb() if cb?
+
+generateBlueprintParser = (ws, cb) ->
+  print "| #{cyan}Creating Blueprint Parser ... #{reset}"
+  fs.readFile grammar, 'utf8', (err, data) ->
     exitWith err if err?
-    # append deps to output file, position tells it where to start writing
+    parser  = new Parser data
+    src     = parser.generate moduleName: 'Wiggy.bp.Parser'
+    written = ws.write src, 'utf8'
+    done    = ->
+      print "#{green}DONE#{reset}\n"
+      cb() if cb?
 
-    startCompile = (code, position) ->
-      print "| #{cyan}Compiling#{reset} ... "
-      compile ['-cs'], code, fd, position, (err, position) ->
-        # Check error status before proceeding with dependencies
-        if err?
-          buildFailed err
-          return
+    if written then done() else ws.on 'drain', done
 
-        fs.close fd
-        buildSucceeded()
-        callback() if callback?
+writeDependencies = (ws, cb) ->
+  deps = fs.readdirSync 'deps'
+  return unless deps? and deps.length > 0
 
-    getCode = (position) ->
-      # this has to be read synchronously since file order is significant when building
-      print "\n| #{cyan}Loading Files:#{reset}\n"
+  print "| #{cyan}Attaching Dependencies ... #{reset}"
+  jsFiles = (js for js in deps when js.match /\.js$/)
+  remaining = jsFiles.length
 
-      code = for f,i in files
-        console.log "| - #{cyan}#{i+1}/#{files.length}#{reset} - #{f}"
-        fs.readFileSync f
+  for file in jsFiles
+    p = join 'deps', file
+    rs = fs.createReadStream p
+    rs.on 'close', ->
+      if --remaining is 0
+        print "#{green}DONE#{reset}\n"
+        cb() if cb?
 
-      startCompile code, position
+    rs.pipe ws, end: false
 
-    getDependencies fd, getCode
+compile = (ws, cb) ->
+  print "| #{cyan}Compiling Files:#{reset}\n"
+  coffee = spawn 'coffee', ['-cs']
 
+  coffee.stdin.setMaxListeners files.length
 
-getDependencies = (fd, callback) ->
-  # attaches js files from 'deps' dir
-  fs.readdir 'deps', (err, files) ->
-    return callback fd, callback unless files? and files.length > 0
-
-    print "| #{cyan}Preparing dependencies#{reset} ... "
-    jsFiles = (js for js in files when js.match /\.js$/)
-    remaining = jsFiles.length
-    for file in jsFiles
-      p = join 'deps', file
-      fs.readFile p, (err, data) ->
-        exitWith err if err?
-        # writes to position followed by compiler output
-        # (don't want to overwrite data)
-        fs.write fd, data, 0, data.length, 0, (err, written) ->
-          exitWith err if err?
-          callback written
-        
-compile = (args, code, fd, written, callback) ->
-  coffee = spawn 'coffee', args
-
-  # setup error handling
-  error = null
-  coffee.stderr.setEncoding 'utf8'
-  coffee.stderr.on 'data', (data) -> error = data
-  coffee.stdin.on 'error', (data) -> error = data
-
-  # setup data output handling
-  coffee.stdout.on 'data', (data) ->
-    print "... "
-    fs.write fd, data, 0, data.length, written
-    written += data.length
-
+  coffee.stdout.pipe ws, end: false
   coffee.stdout.on 'end', ->
-    # return number of bytes written so we know where to write when attaching
-    # dependencies
-    callback error, written
+    print "| #{cyan}Compiling ... #{green}DONE#{reset}\n"
+    cb() if cb?
 
-  # push data into coffee compiler
-  if coffee.stdin.write(code.join "\n\n")
-    print "... "
-    coffee.stdin.end()
-  else
-    coffee.stdin.on 'drain', ->
-      console.log "\n#{red}Kernel buffer was full, draining#{reset}"
-      coffee.stdin.end()
+
+  for f,i in files
+    console.log "| - #{cyan}#{i+1}/#{files.length}#{reset} - #{f}"
+    rs = fs.createReadStream f
+    rs.pipe coffee.stdin
 
 buildFailed = (data) ->
   error = true
@@ -165,7 +148,7 @@ buildFailed = (data) ->
 
 buildSucceeded = ->
   error = false
-  print "\n#{green}[ Build Successful ]#{reset}\n"
+  print "#{green}[ Build Successful ]#{reset}\n"
 
 exitWith = (data) ->
   reportError data

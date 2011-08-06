@@ -99,6 +99,7 @@ Wiggy.register(
   'Wiggy.mixin'
   'Wiggy.util'
   'Wiggy.ui'
+  'Wiggy.bp'
   'Wiggy.data'
   'Wiggy.themes'
 )
