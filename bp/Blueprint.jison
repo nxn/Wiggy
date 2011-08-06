@@ -23,7 +23,7 @@ blueprint
 
 rowlist
   : row
-  | row rowlist
+  | rowlist row
   ;
 
 row
